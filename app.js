@@ -1,5 +1,7 @@
+const passport = require('passport');
+require('./config/passport');
+
 const express = require('express');
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
@@ -7,10 +9,12 @@ const debug = require('debug');
 const cors = require('cors');
 const csurf = require('csurf');
 
-const indexRouter = require('./routes/index');
+require('./models/User');
+
+const path = require('path');
 const usersRouter = require('./routes/api/users');
 const testsRouter = require('./routes/api/tests');
-const csrfRouter = require('./routes/api/csrf');
+const csrfRouter = require('./routes/api/csurf');
 
 const app = express();
 
@@ -18,6 +22,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(passport.initialize());
 
 const { isProduction } = require('./config/keys');
 
@@ -35,7 +40,6 @@ app.use(
     })
 )
 
-app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/tests', testsRouter);
 app.use('/api/csrf', csrfRouter);
