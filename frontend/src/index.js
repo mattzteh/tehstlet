@@ -13,14 +13,14 @@ function Root() {
   	<Provider store={store}>
 		<Router>
         	<App />
-      	</Router>
+    	</Router>
 	</Provider>
   )
 }
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Root />
   </React.StrictMode>,
   document.getElementById('root')
 );
