@@ -10,6 +10,7 @@ const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 
 const { restoreUser, requireUser, loginUser } = require('../../config/passport');
+const { isProduction } = require('../../config/keys');
 
 // GET all users
 router.get('/', function(req, res, next) {

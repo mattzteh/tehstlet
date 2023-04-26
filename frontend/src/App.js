@@ -1,15 +1,26 @@
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
+
+import { getCurrentUser } from './store/session';
 import Home from './components/Home';
+import LoginForm from './components/SessionForms/LoginForm';
+import SignUpForm from './components/SessionForms/SignUpForm';
 
 const App = () => {
-  return (
-    <Routes>
 
-      <Route exact path="/" element={<AuthRoute/>}>
-			<Route exact path="/" element={<Home/>}/>
-      </Route>
-    </Routes>
+  const [loaded, setLoaded] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCurrentUser()).then(() => setLoaded(true));
+  }, [dispatch])
+
+  return loaded && (
+      <Routes>
+		  <Route path="/" element={<Home/>} />
+      </Routes>
   );
 }
 
