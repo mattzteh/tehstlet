@@ -4,9 +4,12 @@ import { Routes, Route } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
 
 import { getCurrentUser } from './store/session';
+
+import Navbar from './components/Navbar';
 import Home from './components/Home';
 import LoginForm from './components/SessionForms/LoginForm';
 import SignUpForm from './components/SessionForms/SignUpForm';
+import Tests from './components/Tests';
 
 const App = () => {
 
@@ -18,9 +21,16 @@ const App = () => {
   }, [dispatch])
 
   return loaded && (
+    <>
+      <Navbar />
       <Routes>
-		  <Route path="/" element={<Home/>} />
+        <Route exact path='/' element={<AuthRoute children={<Home />}/>}/>
+        <Route exact path='/login' element={<AuthRoute children={<LoginForm />}/>}/>
+        <Route exact path='/signup' element={<AuthRoute children={<SignUpForm />}/>}/>
+        <Route exact path='/tests' element={<ProtectedRoute children={<Tests />}/>} />
+
       </Routes>
+    </>
   );
 }
 

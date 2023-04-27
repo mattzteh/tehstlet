@@ -1,8 +1,8 @@
 import jwtFetch from './jwt';
 
-const RECEIVE_CURRENT_USER = 'session/RECEIVE_CURRENT_USER';
-const RECEIVE_SESSION_ERRORS = 'session/RECEIVE_SESSION_ERRORS';
-const CLEAR_SESSION_ERRORS = 'session/CLEAR_SESSION_ERRORS';
+export const RECEIVE_CURRENT_USER = 'session/RECEIVE_CURRENT_USER';
+export const RECEIVE_SESSION_ERRORS = 'session/RECEIVE_SESSION_ERRORS';
+export const CLEAR_SESSION_ERRORS = 'session/CLEAR_SESSION_ERRORS';
 export const RECEIVE_USER_LOGOUT = 'session/RECEIVE_USER_LOGOUT';
 
 // Dispatch receiveCurrentUser when a user logs in.
@@ -76,7 +76,7 @@ const sessionReducer = (state = initialState, action) => {
 const nullErrors = null;
 
 export const sessionErrorsReducer = (state = nullErrors, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case RECEIVE_SESSION_ERRORS:
             return action.errors;
         case RECEIVE_CURRENT_USER:

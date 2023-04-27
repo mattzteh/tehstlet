@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { login, clearSessionErrors } from '../../store/session';
 import './SessionForms.css';
@@ -10,22 +11,34 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const errors = useSelector(state => state.errors.session);
 
     useEffect(() => {
         return () => {
             dispatch(clearSessionErrors());
         }
-    }, [dispatch])
+    },[])
 
     const update = (field) => {
-        const setState = field === 'username' ? setUsername : setPassword;
-        return e => setState(e.currentTarget.value);
+        return (e) => {
+            switch (field) {
+                case 'username':
+                    setUsername(e.currentTarget.value);
+                    break;
+                case 'password':
+                    setPassword(e.currentTarget.value);
+                    break;
+                default:
+                    throw Error('Unknown field in Login Form.');
+            }
+        }
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(login({ username, password }))
+        navigate('/tests')
     }
 
 
@@ -35,9 +48,9 @@ const LoginForm = () => {
 
                 <h1>Sign In</h1>
 
-                <div className='errors'>{errors?.email}</div>
+                <div className='errors'>{errors?.username}</div>
                 <label>
-                    <span>Email</span>
+                    <span>Username</span>
                     <input
                     type='text'
                     value={username}
@@ -46,7 +59,7 @@ const LoginForm = () => {
                     />
                 </label>
 
-                <div className='errors'>{errors?.email}</div>
+                <div className='errors'>{errors?.password}</div>
                 <label>
                     <span>Password</span>
                     <input

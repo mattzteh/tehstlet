@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const router = express.Router();
 
+const passport = require('passport');
+
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 
@@ -36,7 +38,7 @@ router.get('/current', restoreUser, (req, res) => {
 })
 
 // POST /api/users/register (creating a user profile)
-router.post('/register', validateRegisterInput, async(req, res) => {
+router.post('/register', validateRegisterInput, async(req, res, next) => {
   // Check to see username or email is NOT duplicate
 
   const user = await User.findOne({
@@ -88,7 +90,7 @@ router.post('/login', validateLoginInput, async (req, res, next) => {
 		if (!user) {
 			const err = new Error('Invalid Credentials!');
 			err.status = 400;
-			err.errors = { email: 'Invalid Credentials!'};
+			err.errors = { username: 'Invalid Credentials!' };
 			return next(err);
 		}
 		return res.json(await loginUser(user));

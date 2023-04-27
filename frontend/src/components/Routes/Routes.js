@@ -1,33 +1,15 @@
-import { Route, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-export const AuthRoute = ({ component: Component, path, exact }) => {
+export const AuthRoute = ({ children }) => {
   const loggedIn = useSelector(state => !!state.session.user);
 
-  return (
-    <Route path={path} exact={exact} render={(props) => (
-      !loggedIn ? (
-        <Component {...props} />
-      ) : (
-        <Navigate to="/" />
-      )
-    )} />
-  );
-};
+  return !loggedIn ? <>{ children }</> : <Navigate to="/tests" />;
+}
 
-export const ProtectedRoute = ({ component: Component, ...rest }) => {
-    const loggedIn = useSelector(state => !!state.session.user);
-  
-    return (
-      <Route
-        {...rest}
-        render={props =>
-          loggedIn ? (
-            <Component {...props} />
-          ) : (
-            <Navigate to="/login" />
-          )
-        }
-      />
-    );
-  };
+
+export const ProtectedRoute = ({ children }) => {
+  const loggedIn = useSelector(state => !!state.session.user);
+
+  return loggedIn ? <>{ children }</> : <Navigate to='/login'/>
+}

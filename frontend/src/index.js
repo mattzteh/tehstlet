@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from './store/store';
 import jwtFetch from './store/jwt';
 
@@ -13,13 +13,13 @@ if (process.env.NODE_ENV !== 'production') {
   window.jwtFetch = jwtFetch;
 }
 
-function Root() {
+const Root = () => {
   return (
   	<Provider store={store}>
-		<Router>
-        	<App />
-    	</Router>
-	</Provider>
+      <Router>
+        <App />
+      </Router>
+	  </Provider>
   )
 }
 

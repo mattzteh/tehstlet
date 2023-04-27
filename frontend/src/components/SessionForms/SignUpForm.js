@@ -19,34 +19,33 @@ const SignUpForm = () => {
         return () => {
             dispatch(clearSessionErrors());
         }
-    }, [dispatch])
+    },[])
 
     const update = (field) => {
-        let setState;
-
-        switch (field) {
-            case 'email':
-                setState = setEmail;
-                break;
-            case 'username':
-                setState = setUsername;
-                break;
-            case 'firstName':
-                setState = setFirstName;
-                break;
-            case 'lastName':
-                setState = setLastName;
-                break;
-            case 'password':
-                setState = setPassword;
-                break;
-            case 'password2':
-                setState = setPassword2;
-                break;
-            default:
-                throw Error('Unknown field in SignUp Form.');
+        return (e) => {
+            switch (field) {
+                case 'email':
+                    setEmail(e.currentTarget.value);
+                    break;
+                case 'username':
+                    setUsername(e.currentTarget.value);
+                    break;
+                case 'firstName':
+                    setFirstName(e.currentTarget.value);
+                    break;
+                case 'lastName':
+                    setLastName(e.currentTarget.value);
+                    break;
+                case 'password':
+                    setPassword(e.currentTarget.value);
+                    break;
+                case 'password2':
+                    setPassword2(e.currentTarget.value);
+                    break;
+                default:
+                    throw Error('Unknown Field in Signup Form');
+            }
         }
-        return e => setState(e.currentTarget.value);
     }
 
     const usernameSubmit = (e) => {
