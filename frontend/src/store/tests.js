@@ -46,7 +46,7 @@ export const fetchTests = () => async dispatch => {
     } catch (err) {
         const resBody = await err;
         if (resBody.statusCode === 400) {
-            dispatch(receiveErorrs(resBody.errors));
+            dispatch(receiveTestErrors(resBody.errors));
         }
     }
 }
@@ -59,7 +59,7 @@ export const fetchTest = (testId) => async dispatch => {
     } catch (err) {
         const resBody = await err;
         if (resBody.statusCode === 400) {
-            return dispatch(receiveErrors(resBody.errors));
+            return dispatch(receiveTestErrors(resBody.errors));
         }
     }
 }
@@ -73,10 +73,12 @@ export const createTest = (testData) => async dispatch => {
                 'Content-Type' : 'application/json'
             }
         })
+        const test = await res.json();
+        dispatch(receiveNewTest(test));
     } catch (err) {
         const resBody = await err;
         if (resBody.statusCode === 400) {
-            return dispatch(receiveErrors(resBody.errors));
+            return dispatch(receiveTestErrors(resBody.errors));
         }
     }
 }
@@ -91,7 +93,7 @@ export const destroyTest = (testId) => async dispatch => {
     } catch (err) {
         const resBody = await err;
         if (resBody.statusCode === 400) {
-            return dispatch(receiveErrors(resBody.errors));
+            return dispatch(receiveTestErrors(resBody.errors));
         }
     }
 }
