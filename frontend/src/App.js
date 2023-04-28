@@ -10,6 +10,7 @@ import Home from './components/Home';
 import LoginForm from './components/SessionForms/LoginForm';
 import SignUpForm from './components/SessionForms/SignUpForm';
 import Tests from './components/Tests';
+import Profile from './components/Profile';
 
 const App = () => {
 
@@ -28,6 +29,7 @@ const App = () => {
         <Route exact path='/login' element={<AuthRoute children={<LoginForm />}/>}/>
         <Route exact path='/signup' element={<AuthRoute children={<SignUpForm />}/>}/>
         <Route exact path='/tests' element={<ProtectedRoute children={<Tests />}/>} />
+        <Route exact path='/:userId' element={<ProtectedRoute children={<Profile />}/>}></Route>
 
       </Routes>
     </>

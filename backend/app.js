@@ -10,11 +10,13 @@ const cors = require('cors');
 const csurf = require('csurf');
 
 require('./models/User');
+require('./models/Test');
+require('./models/Card');
 
 const path = require('path');
 const usersRouter = require('./routes/api/users');
-const testsRouter = require('./routes/api/tests');
 const csrfRouter = require('./routes/api/csurf');
+const testsRouter = require('./routes/api/tests');
 
 const app = express();
 
@@ -41,8 +43,8 @@ app.use(
 )
 
 app.use('/api/users', usersRouter);
-app.use('/api/tests', testsRouter);
 app.use('/api/csrf', csrfRouter);
+app.use('/api/tests', testsRouter);
 
 app.use((req,res, next) => {
     const err = new Error('Not Found');

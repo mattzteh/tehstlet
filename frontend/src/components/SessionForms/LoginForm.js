@@ -18,7 +18,7 @@ const LoginForm = () => {
         return () => {
             dispatch(clearSessionErrors());
         }
-    },[])
+    },[dispatch])
 
     const update = (field) => {
         return (e) => {

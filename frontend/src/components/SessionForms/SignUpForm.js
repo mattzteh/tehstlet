@@ -19,7 +19,7 @@ const SignUpForm = () => {
         return () => {
             dispatch(clearSessionErrors());
         }
-    },[])
+    },[dispatch])
 
     const update = (field) => {
         return (e) => {
