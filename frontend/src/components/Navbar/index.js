@@ -24,7 +24,7 @@ const Navbar = () => {
         <>
         <div className='navbar' style={{top: isVisible ? '0' : '-60px'}}>
             <div className='home-link'>
-                <Link exact to='/'>Home</Link>
+                <Link exact to="/">Home</Link>
             </div>
             <div className='tests-link'>
                 <Link to='/tests'>Tests</Link>

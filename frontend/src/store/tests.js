@@ -5,6 +5,9 @@ const RECEIVE_TEST = 'tests/RECEIVE_TEST';
 const RECEIVE_NEW_TEST = 'tests/RECEIVE_NEW_TEST';
 const DELETE_TEST = 'tests/DELETE_TEST';
 
+const ADD_CARD_TO_TEST = 'tests/ADD_CARD_TO_TEST';
+const REMOVE_CARD_FROM_TEST = 'tests/REMOVE_CARD_FROM_TEST';
+
 const RECEIVE_TEST_ERRORS = 'tests/RECEIVE_TEST_ERRORS';
 const CLEAR_TEST_ERRORS = 'tests/CLEAR_TEST_ERRORS';
 
@@ -25,6 +28,16 @@ const receiveNewTest = test => ({
 
 const deleteTest = test => ({
     type: DELETE_TEST,
+    test
+})
+
+const addCardToTest = test => ({
+    type: ADD_CARD_TO_TEST,
+    test
+})
+
+const removeCardFromTest = test => ({
+    type: REMOVE_CARD_FROM_TEST,
     test
 })
 
@@ -76,9 +89,9 @@ export const createTest = (testData) => async dispatch => {
         const test = await res.json();
         dispatch(receiveNewTest(test));
     } catch (err) {
-        const resBody = await err;
-        if (resBody.statusCode === 400) {
-            return dispatch(receiveTestErrors(resBody.errors));
+        const res = await err.json();
+        if (res.statusCode === 400) {
+            return dispatch(receiveTestErrors(res.errors));
         }
     }
 }
@@ -91,9 +104,9 @@ export const destroyTest = (testId) => async dispatch => {
         const test = await res.json();
         dispatch(deleteTest(test));
     } catch (err) {
-        const resBody = await err;
-        if (resBody.statusCode === 400) {
-            return dispatch(receiveTestErrors(resBody.errors));
+        const res = await err.json();
+        if (res.statusCode === 400) {
+            return dispatch(receiveTestErrors(res.errors));
         }
     }
 }

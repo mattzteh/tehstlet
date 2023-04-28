@@ -42,7 +42,7 @@ router.get('/:testId', async(req, res, next) => {
 })
 
 // POST api/tests/create (create new test collection)
-router.post('/create', requireUser, validateTestInput, async(req, res, next) => {
+router.post('/create', validateTestInput, async(req, res, next) => {
     try {
         const newTest = new Test({
             creator: req.body.creator,
@@ -50,7 +50,7 @@ router.post('/create', requireUser, validateTestInput, async(req, res, next) => 
             description: req.body.description,
             cards: []
         })
-
+        
         let test = await newTest.save();
         test = await test.populate('creator')
         return res.json(test);

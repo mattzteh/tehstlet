@@ -8,6 +8,10 @@ const Profile = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentUser = useSelector(state => state.session.user);
+    const tests = useSelector(state => state.tests);
+    
+
+    const userTests = Object.values(tests).filter(test => test.creator === currentUser._id)
 
     const endSession = (e) => {
         e.preventDefault();
@@ -19,6 +23,8 @@ const Profile = () => {
         <>
         <div className="profile">
             <h1>Welcome back, {currentUser.username}</h1>
+
+            <li>{userTests.title}</li>
 
             <button className="logout" onClick={endSession}>Log Out</button>
         </div>
