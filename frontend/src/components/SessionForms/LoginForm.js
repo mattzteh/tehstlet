@@ -37,8 +37,14 @@ const LoginForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(login({ username, password }))
-        navigate('/tests')
+        dispatch(login({ username, password }));
+        navigate('/tests');
+    }
+
+    const loginDemoUser = (e) => {
+        e.preventDefault();
+        dispatch(login({ username: 'DemoUser', password: 'password' }));
+        navigate('/tests');
     }
 
 
@@ -75,6 +81,8 @@ const LoginForm = () => {
                     disabled={!username || !password}
                 />
             </form>
+
+            <button onClick={loginDemoUser}>Demo User</button>
         </>
     )
 }

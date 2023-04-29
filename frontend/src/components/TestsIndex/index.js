@@ -9,6 +9,7 @@ const TestsIndex = () => {
     const navigate = useNavigate();
     const user = useSelector(state => state.session.user);
     const errors = useSelector(state => state.errors.test);
+    const tests = useSelector(state => state.tests);
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -41,6 +42,7 @@ const TestsIndex = () => {
             description
         }
         dispatch(createTest(test));
+        navigate(`/tests/${test._id}`)
     }
 
 
