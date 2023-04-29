@@ -11,13 +11,10 @@ const Profile = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentUser = useSelector(state => state.session.user);
-
+    
     // Returns all the tests in state that belong to the user (Tests created by the User)
     const myTests = useSelector(state => Object.values(state.tests).filter(test => test.creator._id === currentUser._id));
 
-    useEffect(() => {
-        dispatch(fetchTests());
-    }, [])
 
     const endSession = (e) => {
         e.preventDefault();

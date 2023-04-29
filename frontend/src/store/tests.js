@@ -2,11 +2,11 @@ import jwtFetch from "./jwt";
 
 const RECEIVE_TESTS = 'tests/RECEIVE_TESTS';
 const RECEIVE_TEST = 'tests/RECEIVE_TEST';
-const RECEIVE_NEW_TEST = 'tests/RECEIVE_NEW_TEST';
+const CREATE_TEST = 'tests/CREATE_TEST';
 const DELETE_TEST = 'tests/DELETE_TEST';
 
-const ADD_CARD_TO_TEST = 'tests/ADD_CARD_TO_TEST';
-const REMOVE_CARD_FROM_TEST = 'tests/REMOVE_CARD_FROM_TEST';
+const CREATE_CARD = 'tests/CREATE_CARD';
+const DELETE_CARD = 'tests/DELETE_CARD';
 
 const RECEIVE_TEST_ERRORS = 'tests/RECEIVE_TEST_ERRORS';
 const CLEAR_TEST_ERRORS = 'tests/CLEAR_TEST_ERRORS';
@@ -21,23 +21,23 @@ const receiveTest = test => ({
     test
 })
 
-const receiveNewTest = test => ({
-    type: RECEIVE_NEW_TEST,
+const createTest = test => ({
+    type: CREATE_TEST,
     test
 })
 
-const deleteTest = test => ({
+const deleteTest = testId => ({
     type: DELETE_TEST,
+    testId
+})
+
+const createCard = test => ({
+    type: CREATE_CARD,
     test
 })
 
-const addCardToTest = test => ({
-    type: ADD_CARD_TO_TEST,
-    test
-})
-
-const removeCardFromTest = test => ({
-    type: REMOVE_CARD_FROM_TEST,
+const deleteCard = test => ({
+    type: DELETE_CARD,
     test
 })
 
@@ -77,7 +77,7 @@ export const fetchTest = (testId) => async dispatch => {
     }
 }
 
-export const createTest = (testData) => async dispatch => {
+export const newTest = (testData) => async dispatch => {
     try {
         const res = await jwtFetch('/api/tests/create', {
             method: 'POST',
@@ -87,7 +87,7 @@ export const createTest = (testData) => async dispatch => {
             }
         })
         const test = await res.json();
-        dispatch(receiveNewTest(test));
+        dispatch(createTest(test));
     } catch (err) {
         const res = await err.json();
         if (res.statusCode === 400) {
@@ -96,19 +96,46 @@ export const createTest = (testData) => async dispatch => {
     }
 }
 
-// export const addCardtoTest = (test, cardData) => async dispatch => {
-//     try {
-//         const res = await jwtFetch('/api/tests')
-//     }
-// }
+export const newCard = (testId, cardData) => async dispatch => {
+    try {
+        const res = await jwtFetch(`/api/tests/${testId}/cards`, {
+            method: 'POST',
+            body: JSON.stringify(cardData),
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        })
+        const card = await res.json();
+        dispatch(createCard(card));
+    } catch (err) {
+        const res = await err.json();
+        if (res.statusCode === 400) {
+            return dispatch(receiveTestErrors(res.errors));
+        }
+    }
+}
+
+export const removeCard = (testId, cardId) => async dispatch => {
+    try {
+        const res = await jwtFetch(`/api/tests/${testId}/${cardId}`, {
+            method: 'DELETE'
+        })
+        const card = await res.json();
+        dispatch(deleteCard(card));
+    } catch (err) {
+        const res = await err.json();
+        if (res.statusCode === 400) {
+            return dispatch(receiveTestErrors(res.errors));
+        }
+    }
+}
 
 export const destroyTest = (testId) => async dispatch => {
     try {
         const res = await jwtFetch(`/api/tests/${testId}`, {
             method: 'DELETE'
         })
-        const test = await res.json();
-        dispatch(deleteTest(test));
+        dispatch(deleteTest(testId));
     } catch (err) {
         const res = await err.json();
         if (res.statusCode === 400) {
@@ -123,7 +150,7 @@ export const testErrorsReducer = (state = nullErrors, action) => {
     switch (action.type) {
         case RECEIVE_TEST_ERRORS:
             return action.errors;
-        case RECEIVE_NEW_TEST:
+        case CREATE_TEST:
         case CLEAR_TEST_ERRORS:
             return nullErrors;
         default:
@@ -141,11 +168,11 @@ const testReducer = (state = {}, action) => {
             return { ...newState, [test.id]: test };
         case RECEIVE_TESTS:
             return { ...newState, ...action.tests };
-        case RECEIVE_NEW_TEST:
+        case CREATE_TEST:
             newState[action.test._id] = action.test;
             return newState;
         case DELETE_TEST:
-            delete newState[action.test];
+            delete newState[action.testId];
             return newState;
         default:
             return state;

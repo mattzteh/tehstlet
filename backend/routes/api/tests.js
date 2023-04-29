@@ -108,7 +108,7 @@ router.delete('/:testId/cards/:cardId', requireUser, async(req, res) => {
 
 
 // DELETE api/tests/:testId (remove test and all cards associated with it)
-router.delete('/:testId', requireUser, async(req, res) => {
+router.delete('/:testId', async(req, res) => {
     try {
         const { testId } = req.params;
         const test = await Test.findById(testId);
@@ -128,6 +128,6 @@ router.delete('/:testId', requireUser, async(req, res) => {
 })
 
 // PATCH api/tests/addCard (create new card in test collection)
-router.patch('/:testId/')
+
 
 module.exports = router;

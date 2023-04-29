@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTests, createTest } from "../../store/tests";
+import { fetchTests, newTest } from "../../store/tests";
 
 const TestsIndex = () => {
 
@@ -9,7 +9,7 @@ const TestsIndex = () => {
     const navigate = useNavigate();
     const user = useSelector(state => state.session.user);
     const errors = useSelector(state => state.errors.test);
-    const tests = useSelector(state => state.tests);
+    const tests = useSelector(state => Object.values(state.tests));
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -17,7 +17,7 @@ const TestsIndex = () => {
 
     useEffect(() => {
         dispatch(fetchTests);
-    }, [])
+    }, [tests])
 
     const update = (field) => {
         return (e) => {
@@ -41,8 +41,8 @@ const TestsIndex = () => {
             title,
             description
         }
-        dispatch(createTest(test));
-        navigate(`/tests/${test._id}`)
+        dispatch(newTest(test));
+        navigate(`/profile/${user._id}`)
     }
 
 

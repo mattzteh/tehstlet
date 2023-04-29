@@ -13,11 +13,16 @@ const Navbar = () => {
 
     if (currentUser) {
         profileLink = (
-            <Link to={`/profile/${currentUser._id}`}>Profile</Link>
+            <div className='profile-link'>
+                <Link to={`/profile/${currentUser._id}`} className='profile'>Profile</Link>
+            </div>
         )
     } else {
         profileLink = (
-            <Link to={'/login'}>Log In</Link>
+            <div className='profile-links'>
+                <div className='login'><Link to={'/login'}>Log In</Link></div>
+                <div className='signup'><Link to={'/signup'}>Sign Up</Link></div>
+            </div>
         )
     }
     
@@ -39,13 +44,14 @@ const Navbar = () => {
     return (
         <>
         <div className='navbar' style={{top: isVisible ? '0' : '-60px'}}>
-            <div className='home-link'>
-                <Link to="/">Home</Link>
+            
+            <div className='home-link'><Link to="/">Tehslet</Link></div>
+
+            <div className='right-links'>
+                <div className='tests-link'><Link to='/tests'>Browse</Link></div>
+                {profileLink}
             </div>
-            <div className='tests-link'>
-                <Link to='/tests'>Tests</Link>
-            </div>
-            <div className='profile-link'>{profileLink}</div>
+
         </div>
 
         </>

@@ -28,7 +28,7 @@ const App = () => {
 
       <Routes>
 
-        <Route exact path='/' element={<AuthRoute children={<Home />}/>}/>
+        <Route exact path='/' element={<Home />}/>
 
         <Route exact path='/login' element={<AuthRoute children={<LoginForm />}/>}/>
         <Route exact path='/signup' element={<AuthRoute children={<SignUpForm />}/>}/>

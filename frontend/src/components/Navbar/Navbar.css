@@ -8,3 +8,21 @@
     padding: 15px 2%;
     transition: top 0.4s;
 }
+
+.profile-links, .right-links {
+    display: flex;
+    justify-content: space-between;
+}
+
+.right-links a {
+    margin: 0px 15px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: black;
+}
+
+.home-link {
+    font-size: 2rem;
+}
