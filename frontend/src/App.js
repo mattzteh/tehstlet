@@ -9,7 +9,8 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import LoginForm from './components/SessionForms/LoginForm';
 import SignUpForm from './components/SessionForms/SignUpForm';
-import Tests from './components/Tests';
+import TestsIndex from './components/TestsIndex';
+import Test from './components/Test';
 import Profile from './components/Profile';
 
 const App = () => {
@@ -24,12 +25,17 @@ const App = () => {
   return loaded && (
     <>
       <Navbar />
+
       <Routes>
+
         <Route exact path='/' element={<AuthRoute children={<Home />}/>}/>
+
         <Route exact path='/login' element={<AuthRoute children={<LoginForm />}/>}/>
         <Route exact path='/signup' element={<AuthRoute children={<SignUpForm />}/>}/>
-        <Route exact path='/tests' element={<ProtectedRoute children={<Tests />}/>} />
-        <Route exact path='/:userId' element={<ProtectedRoute children={<Profile />}/>}></Route>
+
+        <Route exact path='/tests' element={<ProtectedRoute children={<TestsIndex />}/>} />
+        <Route exact path='/tests/:testId' element={<ProtectedRoute children={ <Test />}/>} />
+        <Route exact path='/profile/:userId' element={<ProtectedRoute children={<Profile />}/>} />
 
       </Routes>
     </>

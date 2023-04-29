@@ -53,13 +53,13 @@ const clearTestErrors = errors => ({
 
 export const fetchTests = () => async dispatch => {
     try {
-        const res = await jwtFetch('/api/tests');
+        const res = await jwtFetch('/api/tests/');
         const tests = await res.json();
         dispatch(receiveTests(tests));
     } catch (err) {
-        const resBody = await err;
-        if (resBody.statusCode === 400) {
-            dispatch(receiveTestErrors(resBody.errors));
+        const res = await err.json();
+        if (res.statusCode === 400) {
+            dispatch(receiveTestErrors(res.errors));
         }
     }
 }
@@ -70,9 +70,9 @@ export const fetchTest = (testId) => async dispatch => {
         const test = await res.json();
         dispatch(receiveTest(test));
     } catch (err) {
-        const resBody = await err;
-        if (resBody.statusCode === 400) {
-            return dispatch(receiveTestErrors(resBody.errors));
+        const res = await err.json();
+        if (res.statusCode === 400) {
+            return dispatch(receiveTestErrors(res.errors));
         }
     }
 }
@@ -95,6 +95,12 @@ export const createTest = (testData) => async dispatch => {
         }
     }
 }
+
+// export const addCardtoTest = (test, cardData) => async dispatch => {
+//     try {
+//         const res = await jwtFetch('/api/tests')
+//     }
+// }
 
 export const destroyTest = (testId) => async dispatch => {
     try {

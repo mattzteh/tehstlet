@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTests, createTest } from "../../store/tests";
 
-const Tests = () => {
+const TestsIndex = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const user = useSelector(state => state.session.user);
     const errors = useSelector(state => state.errors.test);
 
@@ -81,4 +83,4 @@ const Tests = () => {
     )
 }
 
-export default Tests;
+export default TestsIndex;

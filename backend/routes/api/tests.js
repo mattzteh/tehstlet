@@ -17,12 +17,10 @@ const validateCardInput = require('../../validation/cards');
 
 router.get('/', async (_req, res) => {
     try {
-        const tests = await Test.find()
-            .populate('creator', '_id, username')
-            .sort({ createdAt: -1 })
-        return res.json(tests);
+        const tests = await Test.find().populate('creator', '_id, username')
+        res.status(200).json(tests);
     }
-    catch(_err) {
+    catch(err) {
         return res.json([])
     }
 })
@@ -50,7 +48,7 @@ router.post('/create', validateTestInput, async(req, res, next) => {
             description: req.body.description,
             cards: []
         })
-        
+
         let test = await newTest.save();
         test = await test.populate('creator')
         return res.json(test);
