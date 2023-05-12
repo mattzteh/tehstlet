@@ -43,7 +43,7 @@ const Navbar = () => {
 
     return (
         <>
-        <div className='navbar' style={{top: isVisible ? '0' : '-60px'}}>
+        <div className='navbar' style={{ top: isVisible ? '0' : '-60px' }}>
             
             <div className='home-link'><Link to="/">Tehslet</Link></div>
 

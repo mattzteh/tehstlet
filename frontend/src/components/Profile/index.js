@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { logout } from "../../store/session";
-import { fetchTests } from '../../store/tests';
 import TestIndexItem from '../TestsIndexItem';
 
 
@@ -14,7 +13,6 @@ const Profile = () => {
     
     // Returns all the tests in state that belong to the user (Tests created by the User)
     const myTests = useSelector(state => Object.values(state.tests).filter(test => test.creator._id === currentUser._id));
-
 
     const endSession = (e) => {
         e.preventDefault();
