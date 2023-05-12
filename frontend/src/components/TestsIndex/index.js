@@ -9,11 +9,13 @@ const TestsIndex = () => {
     const navigate = useNavigate();
     const user = useSelector(state => state.session.user);
     const errors = useSelector(state => state.errors.test);
-    const tests = useSelector(state => Object.values(state.tests));
+
+    // only show tests that are 'public'
+    const tests = useSelector(state => Object.values(state.tests).filter(test => test.onlyMe === false));
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-
+    const [onlyMe, setOnlyMe] = useState(false);
 
     useEffect(() => {
         dispatch(fetchTests);
@@ -28,6 +30,9 @@ const TestsIndex = () => {
                 case 'description':
                     setDescription(e.currentTarget.value);
                     break;
+                case 'onlyMe':
+                    setOnlyMe(!onlyMe);
+                    break;
                 default:
                     throw Error('Unknown field in test form.');
             }
@@ -39,7 +44,8 @@ const TestsIndex = () => {
         const test = {
             creator: user,
             title,
-            description
+            description,
+            onlyMe
         }
         dispatch(newTest(test));
         navigate(`/profile/${user._id}`)
@@ -70,6 +76,15 @@ const TestsIndex = () => {
                     value={description}
                     onChange={update('description')}
                     placeholder="Description (optional)."
+                    />
+                </label>
+
+                <label>
+                    <span>Private?</span>
+                    <input
+                    type='checkbox'
+                    value={onlyMe}
+                    onChange={update('onlyMe')}
                     />
                 </label>
 

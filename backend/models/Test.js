@@ -14,6 +14,11 @@ const testSchema = Schema({
         type: String,
         required: false
     },
+    onlyMe: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     cards: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Card'

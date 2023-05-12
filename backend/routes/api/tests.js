@@ -46,6 +46,7 @@ router.post('/create', validateTestInput, async(req, res, next) => {
             creator: req.body.creator,
             title: req.body.title,
             description: req.body.description,
+            onlyMe: req.body.onlyMe,
             cards: []
         })
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchTest, newCard, removeCardFromTest, destroyTest } from '../../store/tests';
+import { newCard, removeCardFromTest, destroyTest } from '../../store/tests';
 
 const Test = () => {
 
